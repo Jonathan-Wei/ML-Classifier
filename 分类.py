@@ -25,9 +25,7 @@ stopword_content_string = stopword_file.read()
     
 stopword_list = stopword_content_string.split('\n');
     
-#transformer = TfidfTransformer()
 
-#vectorizer_content = CountVectorizer(stop_words=stopword_list)
 '''
 第一步，对于中文，需要进行分词处理
 '''
@@ -149,6 +147,7 @@ def content_vectorizer_test(data):
     #载入停用词
     # 语料向量化        
     #if not os.path.exists("./vectorizer_content.m"):
+    #需要使用和训练器相同的矢量器 否则会报错 ValueError dimension mismatch
     vectorizer_content = joblib.load("./vectorizer_content.m")
     #vectorizer_content = joblib.load("./vectorizer_content.m")
     x_array = vectorizer_content.transform(data)
@@ -183,10 +182,10 @@ def train():
     clf = MultinomialNB(alpha=0.001).fit(X_train,Y)
     
     # KNN分类器
-    from sklearn.neighbors import KNeighborsClassifier    
+    #from sklearn.neighbors import KNeighborsClassifier    
     #clf = KNeighborsClassifier().fit(X_train,Y)
     # 随机森林
-    from sklearn.ensemble import RandomForestClassifier    
+    #from sklearn.ensemble import RandomForestClassifier    
     #clf = RandomForestClassifier(n_estimators=8)    
     #clf.fit(X_train,Y)  
     
@@ -209,5 +208,5 @@ def predict(path):
 
 #segment_content()
 #cut_for_test()
-#train()
+#train()#如果没有训练过模型，需要先通过此方法进行训练
 predict('./test2.txt')
